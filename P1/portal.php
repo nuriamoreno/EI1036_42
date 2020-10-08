@@ -49,6 +49,21 @@ switch ($action) {
             print "</table>";
         }
         break;
+    case "registrar":
+        $datos = $_REQUEST;
+        if (count($_REQUEST) < 7) {
+            $data["error"] = "No has rellenado el formulario correctamente";
+            return;
+        }
+                       
+    $query="CREATE TABLE IF NOT EXISTS  $table (client_id SERIAL PRIMARY KEY, name CHAR(50) NOT NULL, surname CHAR(50) NOT NULL, address CHAR(50),city CHAR(50),zip_code CHAR(5),foto_file VARCHAR(25) );";
+    $a=array($_REQUEST['client_id'], $_REQUEST['name'], $_REQUEST['surname'], $_REQUEST['address'], $_REQUEST['city'],  $_REQUEST['zip_code'],  $_REQUEST['foto_file'] );
+    $query1 = "INSERT INTO  $table (client_id, name, surname, address, city, zip_code, foto_file )
+    VALUES (?,?,?,?,?,?,?)";
+    ejecutarSQL($query, NULL);
+    ejecutarSQL($query1, $a);
+
+        break;
     default:
         $data["error"] = "Accion No permitida";
         $central = "/holaMundo.php";
